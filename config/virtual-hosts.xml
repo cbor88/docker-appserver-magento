@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ ! The following is a basic showcase example for a virtual host configuration.
+ ! Some more examples can be found at:
+ !
+ ! https://github.com/techdivision/TechDivision_AppserverDocumentation/blob/master/docs/components/servers/webserver/modules/vhostmodule.md
+ -->
+<virtualHosts xmlns="http://www.appserver.io/appserver">
+    <virtualHost name="magento.dev">
+        <params>
+            <param name="documentRoot" type="string">webapps/magento</param>
+        </params>
+        <rewrites>
+            <rewrite condition="-d{OR}-f{OR}-l" target="" flag="L" />
+            <rewrite condition="(.*)" target="index.php/$1" flag="L" />
+        </rewrites>
+        <accesses>
+            <access type="allow">
+                <params>
+                    <param name="X_REQUEST_URI" type="string">
+                        ^\/([^\/]+\/)?(media|skin|js|index\.php).*
+                    </param>
+                </params>
+            </access>
+        </accesses>
+    </virtualHost>
+</virtualHosts>

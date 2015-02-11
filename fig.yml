@@ -1,0 +1,21 @@
+appserver:
+   image: davidfeller/appserver-magento:latest
+   ports:
+   - "80:9080"
+   - "443:9443"
+   links:
+   - mysql:mysql
+   - redis:redis
+   - memcached:memcached
+   volumes:
+   - /var/www/magento:/opt/appserver/webapps/magento
+mysql:
+   image: sameersbn/mysql:latest
+   environment:
+   - DB_USER=magento 
+   - DB_PASS=magento
+   - DB_NAME=magento
+redis:
+   image: sameersbn/redis:latest
+memcached:
+   image: sameersbn/memcached:latest
