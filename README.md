@@ -24,5 +24,4 @@ Dockerfile to build appserver.io, MySQL, Redis and memcached in order to run Mag
 
 ![fig up](doc/img/start.png)
 ![fig up](doc/img/docker_ps_a.png)
-
 6. **Mission accomplished!** Now switch to your browser, open your new virtual host (e.g. `http://magento.dev`) and install magento as usual. Make sure to enter `mysql` as database host (**not** localhost).
