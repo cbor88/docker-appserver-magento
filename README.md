@@ -15,10 +15,10 @@ Dockerfile to build appserver.io, MySQL, Redis and memcached in order to run Mag
 		git clone https://github.com/DavidFeller/docker-appserver-magento.git
 		cd docker-appserver-magento
 
-2. Come up with a suitable name for your *virtualHost* and change it in `config/virtual-hosts.xml`. ![](doc/img/vhost.png)
-3. Add the hostname to your hosts file, if you are in a development enviroment. ![](doc/img/hosts.png)
+2. Come up with a suitable name for your *virtualHost* and change it as following `config/virtual-hosts.xml`. ![](doc/img/vhost.png)
+3. (Optional) Add the hostname to your `hosts` file, if you are in a development enviroment. ![](doc/img/hosts.png)
 4. Unpack the magento source to any directory on your local drive (e.g. `/var/www/magento`) and change the path in the volumes section of `fig.yml` accordingly. In production environments, you also might want to change the credentials in the mysql section. ![fig.yml](doc/img/fig.png)
-5. Start all containers using fig. Of course, it's possible to start them individually. 
+5. Start all containers using `fig`. Of course, it's possible to start them individually. 
 
 		fig up
 
