@@ -1,41 +1,28 @@
-#Appserver im Docker-Container
+#Docker, appserver.io & Magento
 
-Basis-Container zum Betrieb des [Appservers](http://www.appserver.io) als Webserver.
+## Introduction
+Dockerfile to build appserver.io, MySQL, Redis and memcached in order to run Magento (CE).
 
-##Voraussetzungen
-* Docker >= v1.1
-* (Mac) Boot2Docker 
+## Requirements
+- Docker version >= v1.3
+- [Fig](http://www.fig.sh/index.html)  - "Fast, isolated development environments using Docker"
+- GNU Linux Kernel version >= 3.8 on the host machine
 
-Wird Ubuntu 12.04 bzw. 14.04 als Host verwendet, sollten *nicht* die mitgelieferten Pakete, sondern das aktuelle Repository von Docker selbst verwendet werden. Docker stellt dazu ein eigenes Script zur Verfügung:
+## Quick Start
 
-    sudo apt-get purge docker.io
-    curl -s https://get.docker.io/ubuntu/ | sudo sh
-    sudo apt-get update
-    sudo apt-get install lxc-docker
-    
-Unter Fedora bzw. RHEL/CentOS kann es zu Problemen mit selinux kommen. Aus diesem Grund sollte möglichst selinux mittels ```setenforce 0``` deaktiviert werden. Allerdings wird dies von RedHat auf Produktivsystemen ausdrücklich *nicht* empfohlen.
+1. Clone the repository from GitHub
 
-## Für Eilige... einfach los!
-Wer einfach nur einen Appserver-Container vom DockerHub ziehen und unverändert starten möchte, kann dies ganz wie folgt tun:
+		git clone https://github.com/DavidFeller/docker-appserver-magento.git
+		cd docker-appserver-magento
 
-	docker run -d --name 'appserver.io' -p 9080:9080 davidfeller/appserver.io
+2. Come up with a suitable name for *virtualHost* and change the hostname in `config/virtual-hosts.xml`. ![](doc/img/vhost.png)
+3. Add the hostname to your hosts file, if you are in a development enviroment. ![](doc/img/hosts.png)
+4. Unpack the magento source to any directory on your local drive (e.g. `/var/www/magento`) and change the path in the volumes section of `fig.yml` accordingly. In production environments, you also might want to change the credentials in the mysql section. ![fig.yml](doc/img/fig.png)
+5. Start all containers using fig. Of course, it's possible to start them individually. 
 
-##<small>für alle anderen...</small> Installation und Bau des Containers
-Aktuell befinden sich noch keine fertigen Images im DockerHub, sodass ein eigenes Image gebaut werden muss
+		fig up
 
-    git clone https://github.com/DavidFeller/docker-appserver.git
-    cd docker-appserver
-    docker build -t "$USER/appserver" .
+![fig up](doc/img/start.png)
+![fig up](doc/img/docker_ps_a.png)
 
-##Volumes und Ports
-Als DocumentRoot kann ein lokales Verzeichnis, z.B. ```/var/www``` in ```/opt/appserver/webapps``` eingebunden werden. Zudem werden zu Wartungszwecken die Verzeichnisse ```/opt/appserver/etc``` und ```/opt/appserver/var``` als Volumes deklariert, sodass sie später von anderen Docker-Container eingebunden und ggf. editiert werden können.
-
-Damit der Container von außen erreichbar ist, werden die Ports 9080 und 9443 "exposed".
-
-##Start des Containers
-Da Docker nur bedingt mit Upstart-Skripten umgehen kann, muss der Appserver beim Start des Containers mittels eines Bash-Skripts gestartet werden. Dazu wird beim Start des Containers die Datei ```start.sh``` eingebunden und ausgeführt.
-
-```docker run -d --name 'appserver' -p 9080:9080 -p 9443:9443 -v /var/www:/opt/appserver/webapps $USER/appserver```
-
-##Demo
-[http://docker.browse-technology.com:9081/](http://docker.browse-technology.com:9081/)
+6. **Mission accomplished!** Now switch to your browser, open your new virtual host (e.g. `http://magento.dev`) and install magento as usual. Make sure to enter `mysql` as database host (**not** localhost).
