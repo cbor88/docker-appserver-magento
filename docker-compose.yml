@@ -1,0 +1,26 @@
+web:
+    image: normvarianz/appserver:1.0.6
+    environment:
+        - MAGENTO_DOMAIN=www.magento.dev
+    volumes:
+        - /home/magento:/opt/appserver/webapps/magento
+    ports:
+        - "9080:9080"
+        - "9443:9443"
+    links:
+        - mysql:mysql
+        - redis:redis
+        - mongodb:mongodb
+
+mysql:
+    image: sameersbn/mysql:latest
+    environment: 
+        - DB_USER=magento
+        - DB_PASS=magento
+        - DB_NAME=magento
+
+redis:
+    image: sameersbn/redis:latest
+
+mongodb:
+    image: sameersbn/mongodb:latest

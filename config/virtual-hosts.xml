@@ -6,7 +6,8 @@
  ! https://github.com/techdivision/TechDivision_AppserverDocumentation/blob/master/docs/components/servers/webserver/modules/vhostmodule.md
  -->
 <virtualHosts xmlns="http://www.appserver.io/appserver">
-    <virtualHost name="magento.dev">
+    <!-- MAGENTO -->
+    <virtualHost name="www.magento.dev">
         <params>
             <param name="documentRoot" type="string">webapps/magento</param>
         </params>
