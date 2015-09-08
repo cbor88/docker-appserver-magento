@@ -25,7 +25,7 @@ COPY config/virtual-hosts.xml /opt/appserver/etc/appserver/conf.d/virtual-hosts.
 RUN `which pecl` install intl
 RUN echo "extension=intl.so" > /opt/appserver/etc/conf.d/intl.ini
 
-RUN yes "" | `which` pecl install mongo
+RUN yes "" | `which pecl` install mongo
 RUN echo "extension=mongo.so" > /opt/appserver/etc/conf.d/mongo.ini
 
 RUN apt-get purge -y php5-dev
