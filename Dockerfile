@@ -2,10 +2,6 @@ FROM ubuntu:latest
 
 MAINTAINER David Feller <david.feller@normvarianz.de>
 
-LABEL de.normvarianz.vendor="NORMVarianz UG (haftungsbeschränkt)"
-LABEL version="1.0"
-LABEL description="Dockerfile to Magento CE using appserver.io"
-
 RUN export DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update
